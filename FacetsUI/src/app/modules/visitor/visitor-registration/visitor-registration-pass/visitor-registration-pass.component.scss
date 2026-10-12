@@ -276,3 +276,24 @@ h1 {
     height: -webkit-fill-available !important;
     overflow: auto !important;
 }
+
+.multi-day-offer {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 100%;
+    margin-bottom: 16px;
+    padding: 10px 16px;
+    background-color: #FFF6D6;
+    border: 1px solid #FFC442;
+    border-radius: 6px;
+    color: #181F37;
+    font-size: 15px;
+    font-weight: 700;
+
+    .material-icons-outlined {
+        flex-shrink: 0;
+        font-size: 18px;
+        color: #B7791F;
+    }
+}

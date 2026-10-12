@@ -31,6 +31,11 @@
                 </div>
             </div>
 
+            <div *ngIf="isDatesShow && showMultiDayOffer" class="multi-day-offer">
+                <span class="material-icons-outlined">sell</span>
+                <span>Select your pass for multiple days and pay only <strong>Rs. 5,000</strong>.</span>
+            </div>
+
             <p *ngIf="checkedList.length != 0">Applied Discount: {{ appliedDiscount == '' ? 'No discount applied' : appliedDiscount }}</p>
 
             <p *ngIf="isDatesShow" class="mt-4">Pass Rates for the selected day/dates</p>

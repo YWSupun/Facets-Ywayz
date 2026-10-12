@@ -235,6 +235,12 @@ export class VisitorRegistrationPassComponent implements OnInit, AfterViewInit {
       this.passForm.get('passCategoryId')?.disable();
   }
 
+  get showMultiDayOffer(): boolean {
+    const selectedId = this.passForm.get('passCategoryId')?.value;
+    const selected = this.passCategories?.find(c => c.key === selectedId);
+    return selected?.value?.trim().toLowerCase() === 'visitor';
+  }
+
   onPassCategoryChange(event: MatSelectChange) {
     this.isDatesShow = false;
     this.getPassCategory(event.value);
