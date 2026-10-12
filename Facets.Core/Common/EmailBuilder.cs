@@ -32,9 +32,10 @@ public sealed class EmailBuilder
                                                                     VisitorIdentityType visitorIdentityType,
                                                                     string identificationNumber,
                                                                     string commaDelimeteredDates,
-                                                                    string template, List<byte[]> svgBytesList)
+                                                                    string template, List<byte[]> svgBytesList,
+                                                                    bool includeForeignBuyerInfo = false)
     {
-        StringBuilder emailBody = new(template);
+        StringBuilder emailBody = new(RenderForeignBuyerSection(template, includeForeignBuyerInfo));
 
         emailBody
         .Replace("#event_name#", eventName)
@@ -43,7 +44,10 @@ public sealed class EmailBuilder
         .Replace("#visitor_last_name#", visitorLastName)
         .Replace("#visitor_identity_type#", visitorIdentityType.ToString())
         .Replace("#identification_number#", identificationNumber)
-        .Replace("#comma_delimetered_dates#", commaDelimeteredDates);
+        .Replace("#comma_delimetered_dates#", commaDelimeteredDates)
+        // Hotel is the event venue; tour wording is temporary until it is provided
+        .Replace("#hotel_details#", "Cinnamon Life at City of Dreams")
+        .Replace("#tour_details#", "To be announced");
 
         EmailModel email = new()
         {
@@ -68,6 +72,22 @@ public sealed class EmailBuilder
         }
 
         return email;
+    }
+
+    private static string RenderForeignBuyerSection(string template, bool include)
+    {
+        const string startMarker = "<!--FOREIGN_BUYER_START-->";
+        const string endMarker = "<!--FOREIGN_BUYER_END-->";
+
+        int start = template.IndexOf(startMarker, StringComparison.Ordinal);
+        int end = template.IndexOf(endMarker, StringComparison.Ordinal);
+
+        if (start < 0 || end < start) return template;
+
+        if (include)
+            return template.Remove(end, endMarker.Length).Remove(start, startMarker.Length);
+
+        return template.Remove(start, end + endMarker.Length - start);
     }
 
     public static EmailModel BuildCancellationEmailMessage(string toEmailAddress,

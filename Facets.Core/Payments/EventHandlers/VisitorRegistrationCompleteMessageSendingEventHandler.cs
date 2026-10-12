@@ -2,6 +2,7 @@
 using Facets.Core.Common.Dtos;
 using Facets.Core.Common.Interfaces;
 using Facets.Core.Events.Interfaces;
+using Facets.Core.Passes.Interfaces;
 using Facets.Core.Payments.Events;
 using Facets.Core.Visitors.Interfaces;
 using Facets.SharedKernal;
@@ -20,13 +21,15 @@ internal sealed class VisitorRegistrationCompleteMessageSendingEventHandler : IN
     private readonly IEventService _eventService;
     private readonly ISMSService _smsService;
     private readonly IEmailService _emailService;
+    private readonly IPassCategoryService _passCategoryService;
 
-    public VisitorRegistrationCompleteMessageSendingEventHandler(IVisitorService visitorService, IEventService eventService, ISMSService smsService, IEmailService emailService)
+    public VisitorRegistrationCompleteMessageSendingEventHandler(IVisitorService visitorService, IEventService eventService, ISMSService smsService, IEmailService emailService, IPassCategoryService passCategoryService)
     {
         _visitorService = visitorService;
         _eventService = eventService;
         _smsService = smsService;
         _emailService = emailService;
+        _passCategoryService = passCategoryService;
     }
 
     public async Task Handle(VisitorInvoicingEventEvent notification, CancellationToken cancellationToken)
@@ -84,6 +87,13 @@ internal sealed class VisitorRegistrationCompleteMessageSendingEventHandler : IN
             if (isSriLankanNumber is false)
             {
                 string template = await _emailService.GetEmailTemplate("VisitorRegistrationSuccessEmailTemplate.html");
+
+                var passCategoryResponse = await _passCategoryService.GetPassCategoryById(notification.VisitorRegistration.EventId,
+                                                                                          notification.VisitorRegistration.PassCategoryId,
+                                                                                          cancellationToken);
+
+                bool isForeignBuyer = passCategoryResponse.Success
+                                      && string.Equals(passCategoryResponse.Data!.Name?.Trim(), "Foreign - Buyer", StringComparison.OrdinalIgnoreCase);
                 
                 await _emailService.SendEmailByQueue(EmailBuilder.BuildEventRegistrationCompletedMessage(
                                                                                   sendTo,
@@ -94,7 +104,7 @@ internal sealed class VisitorRegistrationCompleteMessageSendingEventHandler : IN
                                                                                   visitorIdentityType: visitor.VisitorIdentityType,
                                                                                   identificationNumber: visitor.NICNumber ?? visitor.PassportNumber!,
                                                                                   commaDelimeteredDates: commaDelimeteredDates,
-                template, svgBytesList));
+                template, svgBytesList, includeForeignBuyerInfo: isForeignBuyer));
                 return new();
             }
 
