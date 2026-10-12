@@ -11,6 +11,9 @@ namespace Facets.Core.Payments.Entities;
 
 public sealed class Invoice : EntityBase, ICreatedAudit, IUpdatedAudit, IDeletedAudit
 {
+    // Maximum invoice total: the multi-day pass price (matches the 5000 cap in the public payment UI).
+    private const decimal MultiDayMaxAmount = 5000m;
+
     public DateTimeOffset CreatedOn { get; set; }
     public string? CreatedBy { get; set; }
     public DateTimeOffset? UpdatedOn { get; set; }
@@ -80,7 +83,7 @@ public sealed class Invoice : EntityBase, ICreatedAudit, IUpdatedAudit, IDeleted
 
         SetLineItems(invoiceLineItems);
 
-        TotalAmount = _invoiceLineItems.Sum(s => s.Amount) > 3000 ? 3000: _invoiceLineItems.Sum(s => s.Amount);
+        TotalAmount = Math.Min(_invoiceLineItems.Sum(s => s.Amount), MultiDayMaxAmount);
 
         PaymentStatus = TotalAmount is 0 ? PaymentStatus.Free : PaymentStatus.Unpaid;
     }

@@ -14,6 +14,11 @@ export class ToasterService {
     }
 
     public error(error: ErrorResponse, title: string = 'Error') {
+        if (!error?.errors?.length) {
+            this.toaster.error('Something went wrong. Please try again.', title);
+            return;
+        }
+
         error.errors.forEach(element => {
             if (element.value[0] != undefined)
                 this.toaster.error(element.value[0], element.key.replace(/([a-z0-9])([A-Z])/g, '$1 $2'));

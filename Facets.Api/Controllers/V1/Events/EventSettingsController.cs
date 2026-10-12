@@ -1,4 +1,5 @@
-﻿using Facets.Core.Events.DTOs;
+﻿using Facets.Api.Policies;
+using Facets.Core.Events.DTOs;
 using Facets.Core.Events.Interfaces;
 using Facets.Core.Security.AuthPolicies;
 using Facets.SharedKernal.Responses;
@@ -29,6 +30,7 @@ public sealed class EventSettingsController : AdminAppControllerBase
     }
 
     [HttpGet("payment-settings")]
+    [AllowPublicSiteUser]
     [ProducesResponseType(typeof(ResponseResult<PaymentSettingsDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> GetPaymentSetting([FromRoute] Guid eventId, CancellationToken token)
