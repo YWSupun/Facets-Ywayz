@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Congratulations! You have successfully registered for the #event_name#</title>
+</head>
+
+<body style="color: #222222; background-color: #ffffff; text-align: center; font-family: Arial, sans-serif;">
+    <div style="margin: auto; height: auto; width: 600px;">
+        <table role="presentation" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#efeafe" style="width: 100%; background-color: #efeafe; background-image: linear-gradient(180deg, #e4dcff 0%, #f6f3ff 100%); border-radius: 12px; border-bottom: 3px solid #5b30f7;">
+            <tr>
+                <td align="center" style="padding: 24px 0;">
+                    <a href="#">
+                        <img src="https://facetsuatstrcacc.blob.core.windows.net/common-images/facets-logo.jpg" height="150px" width="150px" alt="FACETS Logo" style="display: block; margin: 0 auto; border-radius: 8px;">
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+        <h1 class="heading" style="color: #5b30f7;">Congratulations!</h1>
+
+        <h3>You have successfully registered for #event_name#</h3>
+        <h4 style="color: #5b30f7;">Your registration details:</h4>
+        <div style=" height: auto; width: 300px;">
+            <ul style="list-style-type: none; text-align: left; padding: 0;">
+                <li style="padding: 10px 0;">Name: #visitor_first_name# #visitor_last_name#</li>
+                <li>ID Number: #visitor_identity_type# - #identification_number#</li>
+                <br>
+                <li>
+                    Event dates: <br>
+
+                    <div style="text-align: center;">#comma_delimetered_dates#</div>
+
+                </li>
+                <li style="padding: 10px 0;">
+                    Visitor Reference Number:
+                </li>
+                <div style="text-align: center;">#visitor_reference#</div>
+            </ul>
+        </div>
+<!--FOREIGN_BUYER_START-->
+        <h4 style="color: #5b30f7; text-align: center; margin: 24px 0 12px 0;">Foreign Buyer Information</h4>
+        <table role="presentation" align="center" width="400" cellpadding="0" cellspacing="0" border="0" style="width: 400px; max-width: 100%; margin: 0 auto; background-color: #f6f3ff; border: 1px solid #5b30f7; border-radius: 8px;">
+            <tr>
+                <td style="padding: 16px;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; text-align: left;">
+                        <tr>
+                            <td width="90" valign="top" style="width: 90px; padding: 12px 0; font-weight: bold; color: #5b30f7; border-bottom: 1px solid #d9d0fb;">Hotel</td>
+                            <td valign="top" style="padding: 12px 0; color: #222222; text-align: left;">#hotel_details#</td>
+                        </tr>
+                        <!-- Tour row hidden until the tour details are available.
+                        <tr>
+                            <td width="90" valign="top" style="width: 90px; padding: 12px 0; font-weight: bold; color: #5b30f7; border-top: 1px solid #d9d0fb;">Tour</td>
+                            <td valign="top" style="padding: 12px 0; color: #222222; text-align: left; border-top: 1px solid #d9d0fb;">#tour_details#</td>
+                        </tr>
+                        -->
+                    </table>
+                </td>
+            </tr>
+        </table>
+<!--FOREIGN_BUYER_END-->
+        <h2 style="color: #5b30f7;">Thank you for joining us!</h2>
+    </div>
+</body>
+</html>

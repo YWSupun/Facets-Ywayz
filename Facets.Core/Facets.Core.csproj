@@ -13,6 +13,7 @@
     <None Remove="EmailTemplates\VisitorRegistrationCancelEmailTemplate.html" />
     <None Remove="EmailTemplates\VisitorRegistrationSuccessEmailTemplate - Copy (2).html" />
     <None Remove="EmailTemplates\VisitorRegistrationSuccessEmailTemplate.html" />
+    <None Remove="EmailTemplates\VisitorRegistrationSuccessEmailTemplate.Light.html" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +27,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="EmailTemplates\VisitorRegistrationSuccessEmailTemplate.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EmailTemplates\VisitorRegistrationSuccessEmailTemplate.Light.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
